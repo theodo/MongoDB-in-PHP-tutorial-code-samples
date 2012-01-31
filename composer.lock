@@ -1,0 +1,25 @@
+{
+    "hash": "71b0eaebe75974d278f512fbfa070036",
+    "packages": [
+        {
+            "package": "symfony\/class-loader",
+            "version": "2.1.0-dev"
+        },
+        {
+            "package": "doctrine\/common",
+            "version": "master-dev"
+        },
+        {
+            "package": "symfony\/console",
+            "version": "2.1.0-dev"
+        },
+        {
+            "package": "symfony\/yaml",
+            "version": "2.1.0-dev"
+        },
+        {
+            "package": "doctrine\/mongodb",
+            "version": "master-dev"
+        }
+    ]
+}
