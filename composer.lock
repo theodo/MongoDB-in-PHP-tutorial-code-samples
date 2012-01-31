@@ -1,14 +1,6 @@
 {
-    "hash": "71b0eaebe75974d278f512fbfa070036",
+    "hash": "92994004a404aa87a830ddc8cdb54f0d",
     "packages": [
-        {
-            "package": "symfony\/class-loader",
-            "version": "2.1.0-dev"
-        },
-        {
-            "package": "doctrine\/common",
-            "version": "master-dev"
-        },
         {
             "package": "symfony\/console",
             "version": "2.1.0-dev"
@@ -20,6 +12,14 @@
         {
             "package": "doctrine\/mongodb",
             "version": "master-dev"
+        },
+        {
+            "package": "doctrine\/mongodb-odm",
+            "version": "master-dev"
+        },
+        {
+            "package": "doctrine\/common",
+            "version": "2.1.4"
         }
     ]
 }

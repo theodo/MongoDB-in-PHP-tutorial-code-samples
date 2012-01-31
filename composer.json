@@ -1,5 +1,6 @@
 {
     "require": {
-        "doctrine/mongodb": "*"
+        "doctrine/common": "2.1.4",
+        "doctrine/mongodb-odm": "master-dev"
     }
 }
