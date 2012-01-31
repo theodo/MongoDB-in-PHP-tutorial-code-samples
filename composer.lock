@@ -1,6 +1,10 @@
 {
-    "hash": "92994004a404aa87a830ddc8cdb54f0d",
+    "hash": "010bf5a51d631ee6f42e487e45795882",
     "packages": [
+        {
+            "package": "doctrine\/common",
+            "version": "master-dev"
+        },
         {
             "package": "symfony\/console",
             "version": "2.1.0-dev"
@@ -16,10 +20,6 @@
         {
             "package": "doctrine\/mongodb-odm",
             "version": "master-dev"
-        },
-        {
-            "package": "doctrine\/common",
-            "version": "2.1.4"
         }
     ]
 }

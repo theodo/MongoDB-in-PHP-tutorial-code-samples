@@ -3,47 +3,40 @@
 require "vendor/.composer/autoload.php";
 
 use Doctrine\Common\ClassLoader,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\ODM\MongoDB\DocumentManager,
-    Doctrine\MongoDB\Connection,
     Doctrine\ODM\MongoDB\Configuration,
-    Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+    Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver,
+    Doctrine\ODM\MongoDB\DocumentManager,
+    Doctrine\MongoDB\Connection;
 
-// Document classes
-$classLoader = new ClassLoader('Documents', __DIR__);
-$classLoader->register();;
-
-
-$cache = new \Doctrine\Common\Cache\ArrayCache;
 
 $config = new Configuration();
-$config->setMetadataCacheImpl($cache);
-
 $config->setProxyDir(__DIR__ . '/cache');
 $config->setProxyNamespace('Proxies');
 
 $config->setHydratorDir(__DIR__ . '/cache');
 $config->setHydratorNamespace('Hydrators');
 
-$reader = new AnnotationReader();
-$reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\\');
-$config->setMetadataDriverImpl(new AnnotationDriver($reader, __DIR__ . '/Documents'));
-
-
+$annotationDriver = $config->newDefaultAnnotationDriver(array(__DIR__ . '/Documents'));
+$config->setMetadataDriverImpl($annotationDriver);
 AnnotationDriver::registerAnnotationClasses();
 
 $dm = DocumentManager::create(new Connection(), $config);
 
 
 
+// Document classes
+$classLoader = new ClassLoader('Documents', __DIR__);
+$classLoader->register();
 
 
 
 
+$product = new \Documents\Product();
+$product->name = 'TEST';
 
-$newProject = new \Documents\Project('Another Project');
-
-$dm->persist($newProject);
+$dm->persist($product);
 $dm->flush();
 
-var_dump($newProject);
+var_dump($product);
+
