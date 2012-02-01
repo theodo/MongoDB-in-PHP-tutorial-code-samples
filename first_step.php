@@ -14,17 +14,16 @@
 
 
   // Create a document
-  $datetime = date('Y-m-d H:i:s');
+  $datetime = new MongoDate($datetime);
   $measurement = array(
 	'captor1' => 981,
 	'captor2' => 954,
 	'datetime' => $datetime
   );
   $coll->insert($measurement);
-  
+
   var_dump($measurement);
   echo $measurement['_id'] . "\n";
-
 
   // Update a document
   $measurement = $coll->findOne(array('datetime' => $datetime));

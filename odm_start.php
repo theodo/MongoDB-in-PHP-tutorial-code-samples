@@ -30,13 +30,12 @@ $classLoader = new ClassLoader('Documents', __DIR__);
 $classLoader->register();
 
 
-
-
-$product = new \Documents\Product();
-$product->name = 'TEST';
-
-$dm->persist($product);
+$measurement = new \Documents\Measurement(981, 954);
+$dm->persist($measurement);
 $dm->flush();
 
-var_dump($product);
+var_dump($measurement);
 
+$measurement = $dm->createQueryBuilder('Documents\Measurement')
+  ->field('captor1')->equals(981)->getQuery();
+var_dump(iterator_to_array($measurement));
