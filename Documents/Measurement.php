@@ -7,24 +7,27 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 class Measurement
 {
     /** @MongoDB\Id */
-    private $id;
+    public $id;
 
     /** @MongoDB\Int */
-    private $captor1;
+    public $captor1;
 
     /** @MongoDB\Int */
-    private $captor2;
+    public $captor2;
 
-    /** @MongoDB\Date */
-    private $datetime;
+    /** @MongoDB\Date @MongoDB\UniqueIndex(order="asc") */
+    public $datetime;
 
     /** @MongoDB\Int */
-    private $year;
+    public $year;
 
-    public function __construct($captor1, $captor2)
+    /** @MongoDB\ReferenceOne(targetDocument="Documents\Building") */
+    public $building;
+
+    public function __construct($captors)
     {
-        $this->captor1 = $captor1;
-        $this->captor2 = $captor2;
+        $this->captor1 = $captors['captor1'];
+        $this->captor2 = $captors['captor2'];
     }
 
     /** @MongoDB\PrePersist */
@@ -32,9 +35,9 @@ class Measurement
     {
     	$this->datetime = new \DateTime();
     	$this->year = intval($this->datetime->format('Y'));
-    	var_dump($this->year);
     }
 
+    // makes old data consistent with new model at loading time
     /** @MongoDB\PreLoad */
     public function ensureYear()
     {

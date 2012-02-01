@@ -13,13 +13,17 @@
   $coll = $db->selectCollection('measurements');
 
 
-  // Create a document
-  $datetime = new MongoDate($datetime);
-  $measurement = array(
-	'captor1' => 981,
-	'captor2' => 954,
-	'datetime' => $datetime
+  // Get data
+  $captors = json_decode(
+    file_get_contents('https://lights.theodo.fr/')
+    , true
   );
+  var_dump($captors);
+
+
+  // Create a document
+  $datetime = new MongoDate(time());
+  $measurement = $captors + array('datetime' => $datetime);
   $coll->insert($measurement);
 
   var_dump($measurement);
@@ -27,8 +31,8 @@
 
   // Update a document
   $measurement = $coll->findOne(array('datetime' => $datetime));
-  $measurement['captor1'] = 982;
-  $measurement['captor2'] = 955;
+  $measurement['captor1'] += 1;
+  $measurement['captor2'] += 1;
   $coll->save($measurement);
 
   var_dump($measurement);
@@ -41,9 +45,9 @@
       'datetime' => $datetime
     ),
     array(
-      '$set' => array(
-		'captor1' => 983,
-		'captor2' => 956
+      '$inc' => array(
+		'captor1' => 1,
+		'captor2' => 1
 	  )
 	)
   );
