@@ -30,7 +30,7 @@ $classLoader->register();
 
 
 // Get data
-$captors = json_decode(file_get_contents('https://lights.theodo.fr/'), true);
+$captors = json_decode(file_get_contents('http://lights.theodo.fr/'), true);
 var_dump($captors);
 
 
@@ -111,19 +111,17 @@ var_dump($measurement);
     ->reduce("
     function(k, vals) {
       var time_on = 0;
-      var time_spent = function(val1, val2)
+      var time_on_between = function(val1, val2)
       {
           var threshold = 80;
           var timeb_on = val1.time_on + val2.time_on;
 
           if (val1.end.captor < threshold && val2.start.captor < threshold)
-          {
-              // we suppose light was on between the two events
+          {   // we suppose light was on from start to end
               timeb_on += val2.start.datetime - val1.end.datetime;
           }
           else if (val1.end.captor <= threshold || val2.start.captor <= threshold)
-          {
-              // we suppose light was on during half the time
+          {   // we suppose light was switched on->off or off->on
               timeb_on += (val2.start.datetime - val1.end.datetime) / 2;
           }
           return timeb_on;
@@ -131,7 +129,7 @@ var_dump($measurement);
       for (var i in vals)
       {
         if (i == 0) { continue; }
-        time_on += time_spent(vals[i-1], vals[i]);
+        time_on += time_on_between(vals[i-1], vals[i]);
       }
       return {'start': vals[0].start, 'end': vals[vals.length-1].end, 'time_on': time_on};
     }"

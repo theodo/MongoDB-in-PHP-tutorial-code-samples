@@ -15,7 +15,7 @@
 
   // Get data
   $captors = json_decode(
-    file_get_contents('https://lights.theodo.fr/')
+    file_get_contents('http://lights.theodo.fr/')
     , true
   );
   var_dump($captors);
